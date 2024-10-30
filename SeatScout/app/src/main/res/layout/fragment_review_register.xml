@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/titleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="리뷰 작성"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/subTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="외야 우측 R2구역"
+        android:textSize="16sp" />
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1"
+        android:rating="2" />
+
+    <TextView
+        android:id="@+id/reviewContentLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="리뷰 내용"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/reviewContentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="이 작품에 대한 리뷰를 작성해주세요."
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:gravity="top"
+         />
+
+    <TextView
+        android:id="@+id/tagOptionsLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="태그 선택"
+        android:textSize="16sp" />
+
+    <RadioGroup
+        android:id="@+id/tagOptionsRadioGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/tagOption1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="시야 좋은" />
+
+        <RadioButton
+            android:id="@+id/tagOption2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="그룹" />
+
+        <RadioButton
+            android:id="@+id/tagOption3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="편안한 관람" />
+
+        <RadioButton
+            android:id="@+id/tagOption4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="가볍다" />
+
+        <RadioButton
+            android:id="@+id/tagOption5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="중간 정도" />
+    </RadioGroup>
+
+    <Button
+        android:id="@+id/submitReviewButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="리뷰 등록하기"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

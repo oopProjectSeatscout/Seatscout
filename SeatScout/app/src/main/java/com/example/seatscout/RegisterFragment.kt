@@ -35,7 +35,7 @@ class RegisterFragment : Fragment() {
             if (password == confirmPassword) {
                 // TODO: 회원가입 처리 구현
             } else {
-                // 비밀번호 불일치 처리 
+                // 비밀번호 불일치 처리
             }
 
 
