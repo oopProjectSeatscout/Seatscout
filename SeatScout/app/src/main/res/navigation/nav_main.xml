@@ -28,4 +28,14 @@
         android:name="com.example.seatscout.RegisterFragment"
         android:label="fragment_register"
         tools:layout="@layout/fragment_register" />
+    <fragment
+        android:id="@+id/stadiumListFragment"
+        android:name="com.example.seatscout.StadiumListFragment"
+        android:label="fragment_stadium_list"
+        tools:layout="@layout/fragment_stadium_list" />
+    <fragment
+        android:id="@+id/reviewRegisterFragment"
+        android:name="com.example.seatscout.ReviewRegisterFragment"
+        android:label="fragment_review_register"
+        tools:layout="@layout/fragment_review_register" />
 </navigation>
