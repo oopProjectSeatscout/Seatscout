@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/entryFragment">
+    app:startDestination="@id/seatsFragment">
 
     <fragment
         android:id="@+id/entryFragment"
@@ -38,4 +38,9 @@
         android:name="com.example.seatscout.ReviewRegisterFragment"
         android:label="fragment_review_register"
         tools:layout="@layout/fragment_review_register" />
+    <fragment
+        android:id="@+id/seatsFragment"
+        android:name="com.example.seatscout.SeatsFragment"
+        android:label="fragment_seats"
+        tools:layout="@layout/fragment_seats" />
 </navigation>
