@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_main"
-    app:startDestination="@id/seatReviewFragment">
+    app:startDestination="@id/stadiumListFragment">
 
     <fragment
         android:id="@+id/entryFragment"
@@ -13,6 +13,9 @@
         <action
             android:id="@+id/action_entryFragment_to_loginFragment3"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_entryFragment_to_stadiumListFragment"
+            app:destination="@id/stadiumListFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -32,7 +35,18 @@
         android:id="@+id/stadiumListFragment"
         android:name="com.example.seatscout.StadiumListFragment"
         android:label="fragment_stadium_list"
-        tools:layout="@layout/fragment_stadium_list" />
+        tools:layout="@layout/fragment_stadium_list" >
+        <action
+            android:id="@+id/action_stadiumListFragment_to_seatsFragment"
+            app:destination="@id/seatsFragment">
+            <argument
+                android:name="stadiumId"
+                app:argType="integer" />
+            <argument
+                android:name="stadiumName"
+                app:argType="string" />
+        </action>
+    </fragment>
     <fragment
         android:id="@+id/reviewRegisterFragment"
         android:name="com.example.seatscout.ReviewRegisterFragment"
@@ -42,10 +56,24 @@
         android:id="@+id/seatsFragment"
         android:name="com.example.seatscout.SeatsFragment"
         android:label="fragment_seats"
-        tools:layout="@layout/fragment_seats" />
+        tools:layout="@layout/fragment_seats" >
+        <argument
+            android:name="stadiumId"
+            app:argType="integer" />
+        <argument
+            android:name="stadiumName"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_seatsFragment_to_seatReviewFragment"
+            app:destination="@id/seatReviewFragment" />
+    </fragment>
     <fragment
         android:id="@+id/seatReviewFragment"
         android:name="com.example.seatscout.SeatReviewFragment"
         android:label="fragment_seat_review"
-        tools:layout="@layout/fragment_seat_review" />
+        tools:layout="@layout/fragment_seat_review" >
+        <action
+            android:id="@+id/action_seatReviewFragment_to_reviewRegisterFragment"
+            app:destination="@id/reviewRegisterFragment" />
+    </fragment>
 </navigation>
