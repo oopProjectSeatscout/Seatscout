@@ -9,18 +9,16 @@ class StadiumAdapter(private val stadiums: Array<Stadium>, private val onItemCli
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): StadiumViewHolder {
         val binding = ListStadiumBinding.inflate(LayoutInflater.from(parent.context), parent, false) // ViewGroup 지정, 새로 생성된 뷰를 부모에 즉시 붙이지 않도록 지정
-        return StadiumViewHolder(binding)
+        return StadiumViewHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: StadiumViewHolder, position: Int) {
-        holder.bind(stadiums[position]) //캡슐화
+        holder.bind(stadiums[position])
     }
 
     override fun getItemCount() = stadiums.size
 
-    // 외부 클래스의 멤버에 접근하기 위함
-    inner class StadiumViewHolder(private val binding: ListStadiumBinding) :
-        RecyclerView.ViewHolder(binding.root) {
+    class StadiumViewHolder(private val binding: ListStadiumBinding, private val onItemClick: (Stadium) -> Unit) : RecyclerView.ViewHolder(binding.root) {
 
         fun bind(stadium: Stadium) {
             binding.stadiumNameTextView.text = stadium.name

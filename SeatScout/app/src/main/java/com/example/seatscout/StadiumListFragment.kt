@@ -31,7 +31,7 @@ class StadiumListFragment : Fragment() {
         recyclerView?.adapter = adapter
     }
 
-    private fun navToSeatsFragment(stadium: Stadium) {
+    fun navToSeatsFragment(stadium: Stadium) {
         val action = StadiumListFragmentDirections.actionStadiumListFragmentToSeatsFragment(
             stadiumId = stadium.id,
             stadiumName = stadium.name
