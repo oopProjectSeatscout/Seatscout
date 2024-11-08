@@ -76,4 +76,9 @@
             android:id="@+id/action_seatReviewFragment_to_reviewRegisterFragment"
             app:destination="@id/reviewRegisterFragment" />
     </fragment>
+    <fragment
+            android:id="@+id/settingsFragment"
+            android:name="com.example.seatscout.SettingsFragment"
+            android:label="fragment_settings"
+            tools:layout="@layout/fragment_settings" />
 </navigation>
