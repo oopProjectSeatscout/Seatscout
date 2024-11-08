@@ -22,7 +22,7 @@ class StadiumListFragment : Fragment() {
         setupRecyclerView()
     }
 
-    fun setupRecyclerView() {
+    private fun setupRecyclerView() {
         val recyclerView = binding?.stadiumRecyclerView
         recyclerView?.layoutManager = GridLayoutManager(context, 2) // 그리드 매니저로 2열로 바꿈
         val adapter = StadiumAdapter(getStadiums()){ stadium ->
@@ -31,7 +31,7 @@ class StadiumListFragment : Fragment() {
         recyclerView?.adapter = adapter
     }
 
-    fun navToSeatsFragment(stadium: Stadium) {
+    private fun navToSeatsFragment(stadium: Stadium) {
         val action = StadiumListFragmentDirections.actionStadiumListFragmentToSeatsFragment(
             stadiumId = stadium.id,
             stadiumName = stadium.name
@@ -39,7 +39,7 @@ class StadiumListFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    fun getStadiums(): Array<Stadium> {
+    private fun getStadiums(): Array<Stadium> {
         return arrayOf(
             Stadium(1, "서울 잠실야구장"),
             Stadium(2, "고척 스카이돔"),
