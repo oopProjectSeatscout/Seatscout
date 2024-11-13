@@ -60,23 +60,21 @@ class ReviewRegisterFragment : Fragment() {
         }
 
         if (reviewContent.isNotBlank() && seatLocation.isNotBlank()) {
-            // 리뷰 제출 로직 추가 필요
-            /*
+            // Review 객체 생성 시 stadiumId와 seatName을 args에서 가져오기
             val review = Review(
                 stadiumId = args.stadiumId,
                 seatName = args.seatName,
                 seatLocation = seatLocation,
                 rating = rating,
                 content = reviewContent,
-                tag = selectTag,
-                사진
+                tag = selectTag
             )
-            */
+
+            // 리뷰 제출 로직
+            reviewViewModel.submitReview(review)
 
             Toast.makeText(requireContext(), "리뷰가 제출되었습니다: ${args.stadiumId}, ${args.seatName}, $rating, $seatLocation, $reviewContent, $selectTag", Toast.LENGTH_SHORT).show()
             findNavController().popBackStack()
-            val review = Review(rating, seatLocation, reviewContent, selectTag)
-            reviewViewModel.submitReview(review)
         } else {
             Toast.makeText(requireContext(), "좌석위치와 리뷰내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
         }
