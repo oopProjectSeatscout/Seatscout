@@ -9,13 +9,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.seatscout.databinding.FragmentSeatReviewBinding
 import androidx.navigation.fragment.navArgs
 import androidx.navigation.fragment.findNavController
-
+import com.example.seatscout.model.Review
+import com.example.seatscout.repository.ReviewRepository
+import com.example.seatscout.viewmodel.ReviewViewModel
+import androidx.lifecycle.ViewModelProvider
 
 class SeatReviewFragment : Fragment() {
-    var binding: FragmentSeatReviewBinding? = null
+    private var binding: FragmentSeatReviewBinding? = null
     private val args: SeatReviewFragmentArgs by navArgs()
-    //private val stadiumId = args.stadiumId
-    //private val seatName = args.seatName
+    private lateinit var reviewViewModel: ReviewViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSeatReviewBinding.inflate(inflater, container, false)
@@ -24,17 +26,38 @@ class SeatReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding?.seatNameTextView?.text = "${args.seatName}" // SeatsFragment의 좌석
+
+        // RecyclerView 설정
         setupRecyclerView()
+
+        // Repository 초기화
+        val repository = ReviewRepository()
+        reviewViewModel = ReviewViewModel(repository)
+
+        // 좌석 이름 설정
+        binding?.seatNameTextView?.text = args.seatName
+
+        // 리뷰 가져오기
+        fetchReviews()
+
+        // 리뷰 작성 버튼 설정
         setupReviewButton()
     }
 
-    fun setupRecyclerView() {
+    private fun setupRecyclerView() {
         val recyclerView = binding?.reviewRecyclerView
         recyclerView?.layoutManager = LinearLayoutManager(context) // 세로 방향 리스트로 설정
-        val adapter = ReviewAdapter(getReviews())
-        recyclerView?.adapter = adapter
     }
+
+    private fun fetchReviews() {
+        reviewViewModel.fetchReviews(args.stadiumId, args.seatName) // stadiumId와 seatName으로 리뷰 가져오기
+        reviewViewModel.reviews.observe(viewLifecycleOwner) { reviews ->
+            // Adapter에 리뷰 데이터 설정
+            val adapter = ReviewAdapter(reviews)
+            binding?.reviewRecyclerView?.adapter = adapter
+        }
+    }
+
 
     private fun setupReviewButton() {
         binding?.writeReviewButton?.setOnClickListener {
@@ -48,14 +71,6 @@ class SeatReviewFragment : Fragment() {
             seatName = args.seatName
         )
         findNavController().navigate(action)
-    }
-
-    fun getReviews(): Array<Review> {
-        return arrayOf(
-            Review(4.0f, "시야가 좋고 편안한 좌석이에요!"),
-            Review(4.0f, "시야가 좋고 편안한 좌석이에요!"),
-            Review(5.0f, "조금 좁지만 시야는 괜찮아요.")
-        )
     }
 
     override fun onDestroyView() {

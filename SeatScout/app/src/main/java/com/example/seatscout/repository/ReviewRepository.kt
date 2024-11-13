@@ -8,23 +8,26 @@ class ReviewRepository {
     private val database = FirebaseDatabase.getInstance()
     private val userRef: DatabaseReference = database.getReference("reviews")
 
-    fun observeReviews(reviews: MutableLiveData<List<Review>>) {
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                val reviewList = mutableListOf<Review>()
-                for (child in snapshot.children) {
-                    val review = child.getValue(Review::class.java)
-                    review?.let { reviewList.add(it) }
+    // 특정 stadiumId에 해당하는 리뷰를 가져오는 메서드
+    fun getReviews(stadiumId: Int, onSuccess: (List<Review>) -> Unit, onFailure: (Exception) -> Unit) {
+        userRef.orderByChild("stadiumId").equalTo(stadiumId.toDouble()) // Int를 Double로 변환하여 비교
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val reviewList = mutableListOf<Review>()
+                    for (child in snapshot.children) {
+                        val review = child.getValue(Review::class.java)
+                        review?.let { reviewList.add(it) }
+                    }
+                    onSuccess(reviewList) // 성공 시 콜백 호출
                 }
-                reviews.postValue(reviewList)
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                // 오류 처리
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    onFailure(Exception(error.message)) // 실패 시 콜백 호출
+                }
+            })
     }
 
+    // 리뷰를 Firebase에 제출하는 메서드
     fun submitReview(review: Review, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
         userRef.push().setValue(review)
             .addOnSuccessListener { onSuccess() }

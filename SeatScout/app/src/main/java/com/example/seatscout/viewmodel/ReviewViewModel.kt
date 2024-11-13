@@ -13,10 +13,18 @@ class ReviewViewModel(private val repository: ReviewRepository) : ViewModel() {
     private val _reviews = MutableLiveData<List<Review>>()
     val reviews: LiveData<List<Review>> get() = _reviews
 
-    init {
-        repository.observeReviews(_reviews)
+    // 특정 seatName으로 필터링하여 리뷰 목록을 Firebase에서 가져오는 메서드
+    fun fetchReviews(stadiumId: Int, seatName: String) {
+        repository.getReviews(stadiumId, onSuccess = { reviewsList ->
+            // seatName이 "프리미엄 석"인 경우만 필터링
+            val filteredReviews = reviewsList.filter { it.seatName == seatName }
+            _reviews.value = filteredReviews
+        }, onFailure = { exception ->
+            _reviews.value = emptyList() // 오류 발생 시 빈 리스트 설정
+        })
     }
 
+    // 리뷰를 제출하는 메서드
     fun submitReview(review: Review) {
         repository.submitReview(
             review = review,

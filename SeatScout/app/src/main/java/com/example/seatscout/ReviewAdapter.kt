@@ -4,12 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.seatscout.databinding.ItemReviewBinding
+import com.example.seatscout.model.Review
 
-class ReviewAdapter(private val reviews: Array<Review>) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
+class ReviewAdapter(private val reviews: List<Review>) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
-    inner class ReviewViewHolder(private val binding: ItemReviewBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ReviewViewHolder(private val binding: ItemReviewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(review: Review) {
-            binding.ratingTextView.text = "★ ${review.rating}"
+            binding.ratingTextView.text = review.rating.toString()
             binding.reviewContentTextView.text = review.content
         }
     }
@@ -23,5 +24,7 @@ class ReviewAdapter(private val reviews: Array<Review>) : RecyclerView.Adapter<R
         holder.bind(reviews[position])
     }
 
-    override fun getItemCount(): Int = reviews.size
+    override fun getItemCount(): Int {
+        return reviews.size
+    }
 }
