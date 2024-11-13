@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.seatscout.databinding.FragmentReviewRegisterBinding
 import android.widget.Toast
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.fragment.findNavController
 import com.example.seatscout.model.Review
 import com.example.seatscout.repository.ReviewRepository
 import com.example.seatscout.viewmodel.ReviewViewModel
@@ -14,6 +16,7 @@ import com.example.seatscout.viewmodel.ReviewViewModel
 class ReviewRegisterFragment : Fragment() {
 
     private var binding: FragmentReviewRegisterBinding? = null
+    private val args: ReviewRegisterFragmentArgs by navArgs()
     private lateinit var reviewViewModel: ReviewViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -40,6 +43,7 @@ class ReviewRegisterFragment : Fragment() {
             uploadPhoto()
         }
     }
+
     private fun submitReview() {
         val rating = binding?.ratingBar?.rating ?: 0f
         val seatLocation = binding?.seatLocationText?.text.toString()
@@ -56,6 +60,21 @@ class ReviewRegisterFragment : Fragment() {
         }
 
         if (reviewContent.isNotBlank() && seatLocation.isNotBlank()) {
+            // 리뷰 제출 로직 추가 필요
+            /*
+            val review = Review(
+                stadiumId = args.stadiumId,
+                seatName = args.seatName,
+                seatLocation = seatLocation,
+                rating = rating,
+                content = reviewContent,
+                tag = selectTag,
+                사진
+            )
+            */
+
+            Toast.makeText(requireContext(), "리뷰가 제출되었습니다: ${args.stadiumId}, ${args.seatName}, $rating, $seatLocation, $reviewContent, $selectTag", Toast.LENGTH_SHORT).show()
+            findNavController().popBackStack()
             val review = Review(rating, seatLocation, reviewContent, selectTag)
             reviewViewModel.submitReview(review)
         } else {
