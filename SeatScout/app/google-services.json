@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "426766773317",
+    "project_id": "seatscout-88dc3",
+    "storage_bucket": "seatscout-88dc3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:426766773317:android:6b9d3f9516f469f2ed072c",
+        "android_client_info": {
+          "package_name": "com.example.seatscout"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVvFHnKK4_7EGLXCGqjS7tV7gwntgNgtc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

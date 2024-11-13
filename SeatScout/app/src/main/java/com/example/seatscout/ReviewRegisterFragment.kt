@@ -7,10 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import com.example.seatscout.databinding.FragmentReviewRegisterBinding
 import android.widget.Toast
+import com.example.seatscout.model.Review
+import com.example.seatscout.repository.ReviewRepository
+import com.example.seatscout.viewmodel.ReviewViewModel
 
 class ReviewRegisterFragment : Fragment() {
 
     private var binding: FragmentReviewRegisterBinding? = null
+    private lateinit var reviewViewModel: ReviewViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentReviewRegisterBinding.inflate(inflater, container, false)
@@ -19,7 +23,13 @@ class ReviewRegisterFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        // Repository를 직접 생성하여 ViewModel에 전달
+        val repository = ReviewRepository()
+        reviewViewModel = ReviewViewModel(repository)
+
         setupUI()
+        observeViewModel()
     }
 
     private fun setupUI() {
@@ -46,10 +56,16 @@ class ReviewRegisterFragment : Fragment() {
         }
 
         if (reviewContent.isNotBlank() && seatLocation.isNotBlank()) {
-            // 리뷰 제출 로직 추가 필요
-            Toast.makeText(requireContext(), "리뷰가 제출되었습니다: $rating, $seatLocation, $selectTag", Toast.LENGTH_SHORT).show()
+            val review = Review(rating, seatLocation, reviewContent, selectTag)
+            reviewViewModel.submitReview(review)
         } else {
             Toast.makeText(requireContext(), "좌석위치와 리뷰내용을 입력해주세요.", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun observeViewModel() {
+        reviewViewModel.submissionStatus.observe(viewLifecycleOwner) { status ->
+            Toast.makeText(requireContext(), status, Toast.LENGTH_SHORT).show()
         }
     }
 
