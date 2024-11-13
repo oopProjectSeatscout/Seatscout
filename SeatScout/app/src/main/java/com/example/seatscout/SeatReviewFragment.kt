@@ -7,9 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.seatscout.databinding.FragmentSeatReviewBinding
+import androidx.navigation.fragment.navArgs
+import androidx.navigation.fragment.findNavController
+
 
 class SeatReviewFragment : Fragment() {
     var binding: FragmentSeatReviewBinding? = null
+    private val args: SeatReviewFragmentArgs by navArgs()
+    //private val stadiumId = args.stadiumId
+    //private val seatName = args.seatName
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentSeatReviewBinding.inflate(inflater, container, false)
@@ -18,7 +24,9 @@ class SeatReviewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding?.seatNameTextView?.text = "${args.seatName}" // SeatsFragment의 좌석
         setupRecyclerView()
+        setupReviewButton()
     }
 
     fun setupRecyclerView() {
@@ -26,6 +34,20 @@ class SeatReviewFragment : Fragment() {
         recyclerView?.layoutManager = LinearLayoutManager(context) // 세로 방향 리스트로 설정
         val adapter = ReviewAdapter(getReviews())
         recyclerView?.adapter = adapter
+    }
+
+    private fun setupReviewButton() {
+        binding?.writeReviewButton?.setOnClickListener {
+            navigateToReviewRegister()
+        }
+    }
+
+    private fun navigateToReviewRegister() {
+        val action = SeatReviewFragmentDirections.actionSeatReviewFragmentToReviewRegisterFragment(
+            stadiumId = args.stadiumId,
+            seatName = args.seatName
+        )
+        findNavController().navigate(action)
     }
 
     fun getReviews(): Array<Review> {

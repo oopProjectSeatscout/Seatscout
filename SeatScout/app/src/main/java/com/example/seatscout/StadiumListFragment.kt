@@ -20,6 +20,7 @@ class StadiumListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
+        setupLoginButton()
     }
 
     private fun setupRecyclerView() {
@@ -36,6 +37,17 @@ class StadiumListFragment : Fragment() {
             stadiumId = stadium.id,
             stadiumName = stadium.name
         )
+        findNavController().navigate(action)
+    }
+
+    private fun setupLoginButton() {
+        binding?.loginButton?.setOnClickListener {
+            navToLoginFragment()
+        }
+    }
+
+    private fun navToLoginFragment() {
+        val action = StadiumListFragmentDirections.actionStadiumListFragmentToLoginFragment()
         findNavController().navigate(action)
     }
 
