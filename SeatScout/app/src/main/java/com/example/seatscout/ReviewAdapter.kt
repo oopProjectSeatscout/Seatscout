@@ -12,6 +12,8 @@ class ReviewAdapter(private val reviews: List<Review>) : RecyclerView.Adapter<Re
         fun bind(review: Review) {
             binding.ratingTextView.text = review.rating.toString()
             binding.reviewContentTextView.text = review.content
+            binding.seatLocationTextView.text = review.seatLocation // 좌석 위치 표시
+            binding.tagTextView.text = review.tag // 태그 표시
         }
     }
 

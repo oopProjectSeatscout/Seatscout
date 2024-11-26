@@ -55,6 +55,18 @@ class SeatReviewFragment : Fragment() {
             // Adapter에 리뷰 데이터 설정
             val adapter = ReviewAdapter(reviews)
             binding?.reviewRecyclerView?.adapter = adapter
+
+            // 평균 평점 계산
+            val averageRating = calculateAverageRating(reviews)
+            binding?.averageRatingValueTextView?.text = String.format("★ %.1f / 5.0", averageRating) // 평균 평점 표시
+        }
+    }
+
+    private fun calculateAverageRating(reviews: List<Review>): Float {
+        return if (reviews.isEmpty()) {
+            0.0f // 리뷰가 없을 경우 0 반환
+        } else {
+            reviews.map { it.rating }.average().toFloat() // 평점의 평균 계산
         }
     }
 

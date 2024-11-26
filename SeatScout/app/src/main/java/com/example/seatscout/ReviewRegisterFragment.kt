@@ -27,6 +27,9 @@ class ReviewRegisterFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 좌석 이름 설정
+        binding?.subTitleTextView?.text = args.seatName // args에서 seatName 가져와서 설정
+
         // Repository를 직접 생성하여 ViewModel에 전달
         val repository = ReviewRepository()
         reviewViewModel = ReviewViewModel(repository)
@@ -43,6 +46,14 @@ class ReviewRegisterFragment : Fragment() {
             uploadPhoto()
         }
     }
+    private fun navigateToReviewRegister() {
+        val action = SeatReviewFragmentDirections.actionSeatReviewFragmentToReviewRegisterFragment(
+            stadiumId = args.stadiumId,
+            seatName = args.seatName // 여기서 seatName을 전달
+        )
+        findNavController().navigate(action)
+    }
+
 
     private fun submitReview() {
         val rating = binding?.ratingBar?.rating ?: 0f
@@ -58,6 +69,8 @@ class ReviewRegisterFragment : Fragment() {
             R.id.tagOption5 -> "중간 정도"
             else -> "태그 없음"
         }
+
+
 
         if (reviewContent.isNotBlank() && seatLocation.isNotBlank()) {
             // Review 객체 생성 시 stadiumId와 seatName을 args에서 가져오기

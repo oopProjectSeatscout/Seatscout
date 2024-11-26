@@ -24,7 +24,7 @@
                 android:id="@+id/subTitleTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="외야 우측 R2구역"
+                android:text="좌석 정보"
                 android:textSize="16sp" />
 
         <RatingBar

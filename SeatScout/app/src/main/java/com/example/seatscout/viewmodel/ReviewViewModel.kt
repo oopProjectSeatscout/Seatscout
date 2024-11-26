@@ -1,5 +1,6 @@
 package com.example.seatscout.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,11 +17,20 @@ class ReviewViewModel(private val repository: ReviewRepository) : ViewModel() {
     // 특정 seatName으로 필터링하여 리뷰 목록을 Firebase에서 가져오는 메서드
     fun fetchReviews(stadiumId: Int, seatName: String) {
         repository.getReviews(stadiumId, onSuccess = { reviewsList ->
-            // seatName이 "프리미엄 석"인 경우만 필터링
+            // seatName으로 필터링
             val filteredReviews = reviewsList.filter { it.seatName == seatName }
             _reviews.value = filteredReviews
         }, onFailure = { exception ->
             _reviews.value = emptyList() // 오류 발생 시 빈 리스트 설정
+        })
+    }
+
+    fun fetchAllReviews(stadiumId: Int) {
+        // Firebase에서 모든 리뷰를 가져오는 로직
+        repository.getAllReviews(stadiumId, onSuccess = { fetchedReviews ->
+            _reviews.value = fetchedReviews // 모든 리뷰를 LiveData에 설정
+        }, onFailure = { exception ->
+            Log.e("ReviewViewModel", "Error fetching reviews: ${exception.message}")
         })
     }
 
