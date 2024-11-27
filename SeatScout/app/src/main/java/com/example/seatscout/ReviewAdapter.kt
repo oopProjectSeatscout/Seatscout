@@ -10,10 +10,11 @@ class ReviewAdapter(private val reviews: List<Review>) : RecyclerView.Adapter<Re
 
     class ReviewViewHolder(private val binding: ItemReviewBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(review: Review) {
-            binding.ratingTextView.text = review.rating.toString()
+            binding.reviewUserEmail.text = review.userEmail ?: "익명"
+            binding.ratingTextView.text = "★ ${review.rating}"
             binding.reviewContentTextView.text = review.content
             binding.seatLocationTextView.text = review.seatLocation // 좌석 위치 표시
-            binding.tagTextView.text = review.tag // 태그 표시
+            binding.tagTextView.text = "#${review.tag}" // 태그 표시
         }
     }
 

@@ -5,12 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavOptions
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.seatscout.databinding.FragmentStadiumListBinding
 import androidx.navigation.fragment.findNavController
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 
 class StadiumListFragment : Fragment() {
     var binding: FragmentStadiumListBinding? = null
+    private lateinit var auth: FirebaseAuth
+
+    // Fragment가 생성될 때 호출
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = Firebase.auth
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentStadiumListBinding.inflate(inflater, container, false)
@@ -19,8 +30,14 @@ class StadiumListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        setupRecyclerView()
-        setupLoginButton()
+
+        // 로그인한 유저 세션을 확인
+        val checkUser = auth.currentUser
+        if (checkUser == null) {
+            navToLoginFragment()
+        } else {
+            setupRecyclerView()
+        }
     }
 
     private fun setupRecyclerView() {
@@ -40,15 +57,9 @@ class StadiumListFragment : Fragment() {
         findNavController().navigate(action)
     }
 
-    private fun setupLoginButton() {
-        binding?.loginButton?.setOnClickListener {
-            navToLoginFragment()
-        }
-    }
-
     private fun navToLoginFragment() {
         val action = StadiumListFragmentDirections.actionStadiumListFragmentToLoginFragment()
-        findNavController().navigate(action)
+        findNavController().navigate(action, NavOptions.Builder().setPopUpTo(R.id.stadiumListFragment, true).build())
     }
 
     private fun getStadiums(): Array<Stadium> {

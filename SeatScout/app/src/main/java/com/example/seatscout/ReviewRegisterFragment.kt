@@ -12,12 +12,20 @@ import androidx.navigation.fragment.findNavController
 import com.example.seatscout.model.Review
 import com.example.seatscout.repository.ReviewRepository
 import com.example.seatscout.viewmodel.ReviewViewModel
+import com.google.firebase.auth.FirebaseAuth
 
 class ReviewRegisterFragment : Fragment() {
 
     private var binding: FragmentReviewRegisterBinding? = null
     private val args: ReviewRegisterFragmentArgs by navArgs()
     private lateinit var reviewViewModel: ReviewViewModel
+    private lateinit var auth: FirebaseAuth
+
+    // Fragment가 생성될 때 호출
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        auth = FirebaseAuth.getInstance()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = FragmentReviewRegisterBinding.inflate(inflater, container, false)
@@ -60,6 +68,7 @@ class ReviewRegisterFragment : Fragment() {
         val seatLocation = binding?.seatLocationText?.text.toString()
         val reviewContent = binding?.reviewContentText?.text.toString()
         val selectTagId = binding?.tagOptionsRadioGroup?.checkedRadioButtonId
+        val userEmail = auth.currentUser?.email
 
         val selectTag = when (selectTagId) {
             R.id.tagOption1 -> "시야 좋은"
@@ -70,8 +79,6 @@ class ReviewRegisterFragment : Fragment() {
             else -> "태그 없음"
         }
 
-
-
         if (reviewContent.isNotBlank() && seatLocation.isNotBlank()) {
             // Review 객체 생성 시 stadiumId와 seatName을 args에서 가져오기
             val review = Review(
@@ -80,7 +87,8 @@ class ReviewRegisterFragment : Fragment() {
                 seatLocation = seatLocation,
                 rating = rating,
                 content = reviewContent,
-                tag = selectTag
+                tag = selectTag,
+                userEmail = userEmail
             )
 
             // 리뷰 제출 로직

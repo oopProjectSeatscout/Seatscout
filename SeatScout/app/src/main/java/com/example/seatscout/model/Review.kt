@@ -6,5 +6,6 @@ data class Review(
     val seatLocation: String = "",   // 좌석 위치
     val rating: Float = 0f,          // 평점
     val content: String = "",        // 리뷰 내용
-    val tag: String = ""             // 태그
+    val tag: String = "",             // 태그
+    val userEmail: String? = null   // 유저 이메일
 )
